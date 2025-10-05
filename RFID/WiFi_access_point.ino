@@ -1,21 +1,21 @@
-#include <WiFi.h>
-#include <DNSServer.h>
-// #include <SSD1306Wire.h>
+// #include <WiFi.h>
+// #include <DNSServer.h>
+// // #include <SSD1306Wire.h>
 
-// Access Point credentials
-const char *ssid = "TEST";
-const char *password = NULL;
-int connections = 0;
+// // Access Point credentials
+// const char *ssid = "TEST";
+// const char *password = NULL;
+// int connections = 0;
 
-// Onboard WiFi server
-WiFiServer server(80);
-String responseHTML = "<!DOCTYPE html><html>"
-                      "<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
-                      "<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}"
-                      "</style></head>"
-                      "<body><h1>ESP32 Web Server</h1>"
-                      "<p>Hello World</p>"
-                      "</body></html>";
+// // Onboard WiFi server
+// WiFiServer server(80);
+// String responseHTML = "<!DOCTYPE html><html>"
+//                       "<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+//                       "<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}"
+//                       "</style></head>"
+//                       "<body><h1>ESP32 Web Server</h1>"
+//                       "<p>Hello World</p>"
+//                       "</body></html>";
 
 // OLED Display 128x64
 // SSD1306Wire  display(0x3c, 5, 4);

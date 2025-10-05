@@ -1,24 +1,24 @@
-#include <MFRC522.h>
-MFRC522 rfid(10, 9); // SDA, RST
-
 void RFID_setup() {
-  Serial.begin(115200);
-  SPI.begin();      // запуск шины
-  rfid.PCD_Init();  // инициализация модуля
+  Serial.begin(9600);
+  SPI.begin();
+  mfrc522.PCD_Init();
 }
 
 void RFID_loop() {
-  // если поднесена метка
-  if (rfid.PICC_IsNewCardPresent() && rfid.PICC_ReadCardSerial()) {
-    // запишем метку в 4 байта
-    uint32_t ID;
-    for (byte i = 0; i < 4; i++) {
-      ID <<= 8;
-      ID |= rfid.uid.uidByte[i];
-    }
+  // Проверяем, есть ли новая карта
+  if (!mfrc522.PICC_IsNewCardPresent()) return;
 
-    // выведем
-    Serial.println(ID, HEX);
-    delay(500);
+  // Пробуем считать UID
+  if (!mfrc522.PICC_ReadCardSerial()) return;
+
+  Serial.print("UID: ");
+  for (byte i = 0; i < mfrc522.uid.size; i++) {
+    Serial.print(mfrc522.uid.uidByte[i] < 0x10 ? "0" : "");
+    Serial.print(mfrc522.uid.uidByte[i], HEX);
+    Serial.print(" ");
   }
+  Serial.println();
+
+  // Останавливаем работу с картой
+  mfrc522.PICC_HaltA();
 }
