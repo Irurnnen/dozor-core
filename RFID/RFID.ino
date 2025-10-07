@@ -1,14 +1,10 @@
-// потом все может дефайны сюда вынесу и  библеотеки
-// как миниму этот файл нуже чтобы все работало
-
 #include <WiFi.h>
 #include <DNSServer.h>
-// #include <SSD1306Wire.h>
 
 // Access Point credentials
-const char *ssid = "TEST";  // name of Wi-Fi
-const char *password = NULL; // password of Wi-Fi
-int connections = 0;
+#define ssid "TEST"  // name of Wi-Fi
+#define password NULL // password of Wi-Fi
+// int connections = 0;
 
 // Onboard WiFi server
 WiFiServer server(80);

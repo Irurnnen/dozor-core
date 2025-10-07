@@ -31,8 +31,7 @@
 //   draw_message(data);
 // }
 
-void WiFi_setup() {
-  Serial.begin(9600);                   
+void WiFi_setup() {                  
   // Serial.println();
   // Serial.println("Configuring access point...");
 

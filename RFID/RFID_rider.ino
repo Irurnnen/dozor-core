@@ -1,12 +1,11 @@
 void RFID_setup() {
-  Serial.begin(9600);
   SPI.begin();
   mfrc522.PCD_Init();
 }
 
 void RFID_loop() {
   // Проверяем, есть ли новая карта
-  if (!mfrc522.PICC_IsNewCardPresent()) return;
+  // if (!mfrc522.PICC_IsNewCardPresent()) return;
 
   // Пробуем считать UID
   if (!mfrc522.PICC_ReadCardSerial()) return;
