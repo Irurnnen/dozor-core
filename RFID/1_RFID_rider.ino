@@ -4,11 +4,11 @@ void RFID_setup() {
 }
 
 String getUID() {
-  if (!mfrc522.PICC_IsNewCardPresent()) {   // нет новой карты в поле
+  if (!mfrc522.PICC_IsNewCardPresent()) {  // нет новой карты в поле
     delay(5);
     return "";
   }
-  if (!mfrc522.PICC_ReadCardSerial()) {     // ошибка чтения UID
+  if (!mfrc522.PICC_ReadCardSerial()) {  // ошибка чтения UID
     delay(5);
     return "";
   }
@@ -26,11 +26,11 @@ String getUID() {
   Serial.println(UID);
 
 
-  ledFlash(0, 60, 60, 60, 40, 1);           // бирюзовая вспышка — чтение
+  ledFlash(0, 60, 60, 60, 40, 1);  // бирюзовая вспышка — чтение
   // printEventJson(mfrc522.uid);              // печать события
-  ledFlash(0, 60, 0, 120, 60, 2);           // зелёные вспышки — успех
+  ledFlash(0, 60, 0, 120, 60, 2);  // зелёные вспышки — успех
 
-  mfrc522.PICC_HaltA();                     // завершение сессии с картой
+  mfrc522.PICC_HaltA();  // завершение сессии с картой
   mfrc522.PCD_StopCrypto1();
 
   // «антизалипание» считывания при удержании карты: краткая пауза
@@ -39,7 +39,7 @@ String getUID() {
     if (!mfrc522.PICC_IsNewCardPresent()) break;
     delay(30);
   }
-  ledColor(0, 0, 60, 20);                   // возврат в режим ожидания
+  ledColor(0, 0, 60, 20);  // возврат в режим ожидания
 
   return UID;
 }

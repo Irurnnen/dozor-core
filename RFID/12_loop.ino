@@ -1,12 +1,6 @@
-void loop(){
-  // Serial.println("?");
+void loop() {
   unsigned long now = millis();
-  // digitalWrite(LED_PIN, HIGH);
-  // delay(1000);
-  // digitalWrite(LED_PIN, LOW);
-  // delay(1000);
 
-  
   // String data = printEventJson(getUID);
   // String data = "AA:BB:CC:DD:EE:FF";
   // webSocket.broadcastTXT(data);

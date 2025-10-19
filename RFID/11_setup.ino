@@ -1,13 +1,30 @@
+/* ------------------- УТИЛИТЫ LED ------------------- */
+static inline void ledColor(uint8_t r, uint8_t g, uint8_t b, uint8_t br = 20) {
+  pixel.setBrightness(br);
+  pixel.setPixelColor(0, pixel.Color(r, g, b));
+  pixel.show();
+}
+static inline void ledFlash(uint8_t r, uint8_t g, uint8_t b,
+                            int on_ms = 120, int off_ms = 80, int times = 2) {
+  for (int i = 0; i < times; i++) {
+    ledColor(r, g, b, 40);
+    delay(on_ms);
+    ledColor(0, 0, 0, 0);
+    delay(off_ms);
+  }
+}
+
+
 /* ----------- Печать JSON ----------- */
 static String printEventJson(const String uid) {
   String juid = "{\"uid\":\"" + uid;
   // Serial.print("{\"uid\":\"");
   // Serial.print(uid);
-   
+
   // Serial.print("\",\"type\":\"");
   MFRC522::PICC_Type t = mfrc522.PICC_GetType(mfrc522.uid.sak);
   // Serial.print((__FlashStringHelper*)mfrc522.PICC_GetTypeName(t));
-  juid += "\",\"type\":\"" + String (mfrc522.PICC_GetTypeName(t));
+  juid += "\",\"type\":\"" + String(mfrc522.PICC_GetTypeName(t));
 
   // Serial.print("\"");
   juid += "\"";
@@ -45,12 +62,12 @@ static String printEventJson(const String uid) {
 }
 
 
-void setup(){
+void setup() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
 
   Serial.begin(115200);
-  
+
   RFID_setup();
   WSS_setup();
 }
