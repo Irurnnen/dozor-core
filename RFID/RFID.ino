@@ -1,3 +1,15 @@
+/*
+ * ESP32-S3 + RC522 (SPI) + DS3231 (I2C) + встроенный NeoPixel
+ * Вывод: одна строка JSON на каждое считывание карты/брелка.
+ * Формат при наличии RTC:
+ *   {"uid":"FB:F0:B5:02","type":"MIFARE 1KB","ts":"2025-10-02 00:52:59","ts_src":"rtc"}
+ * Формат при отсутствии RTC:
+ *   {"uid":"FB:F0:B5:02","type":"MIFARE 1KB","ts_src":"no_rtc"}
+ *
+ * Установка времени RTC по Serial:
+ *   T=2025-10-02 12:34:56
+ */
+
 #include <SPI.h>
 #include <Wire.h>
 /* ---------- WiFi ---------- */
@@ -21,16 +33,16 @@ WebSocketsServer webSocket = WebSocketsServer(81);
 
 /* ---------- ПИНЫ ---------- */
 // RC522 (SPI)
-#define RC522_SS 5     // SS (SDA на модуле RC522)
-#define RC522_RST 4    // RST
-#define RC522_SCK 18   // SCK
-#define RC522_MISO 19  // MISO
-#define RC522_MOSI 23  // MOSI
+#define RC522_SS    10    // SS (SDA на модуле RC522)
+#define RC522_RST   7     // RST
+#define RC522_SCK   12    // SCK
+#define RC522_MISO  13    // MISO
+#define RC522_MOSI  11    // MOSI
 // DS3231 (I2C)
-#define I2C_SDA 21  // SDA
-#define I2C_SCL 22  // SCL
+#define I2C_SDA   8   // SDA
+#define I2C_SCL   9   // SCL
 // Встроенный NeoPixel (часто GPIO48 на ESP32-S3 DevKit)
-#define LED_PIN 48
+#define LED_PIN   48
 #define LED_COUNT 1
 /* ------------------------------------------------------- */
 

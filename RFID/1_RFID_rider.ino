@@ -6,11 +6,11 @@ void RFID_setup() {
 String getUID() {
   if (!mfrc522.PICC_IsNewCardPresent()) {  // нет новой карты в поле
     delay(5);
-    return "";
+    return "no_new_card";
   }
   if (!mfrc522.PICC_ReadCardSerial()) {  // ошибка чтения UID
     delay(5);
-    return "";
+    return "read_error";
   }
 
   // записываем UID
@@ -21,10 +21,6 @@ String getUID() {
     UID += String(mfrc522.uid.uidByte[i], HEX);
   }
   UID.toUpperCase();
-
-  Serial.print("UID: ");
-  Serial.println(UID);
-
 
   ledFlash(0, 60, 60, 60, 40, 1);  // бирюзовая вспышка — чтение
   // printEventJson(mfrc522.uid);              // печать события

@@ -16,7 +16,7 @@ static inline void ledFlash(uint8_t r, uint8_t g, uint8_t b,
 
 
 /* ----------- Печать JSON ----------- */
-static String printEventJson(const String uid) {
+static String printEventJson(/*const*/ String uid) {
   String juid = "{\"uid\":\"" + uid;
   // Serial.print("{\"uid\":\"");
   // Serial.print(uid);
@@ -53,21 +53,45 @@ static String printEventJson(const String uid) {
     // Serial.print("\",\"ts_src\":\"rtc\"}\n");
   } else {
     // RTC отсутствует/недоступен — время не выводим
-    Serial.print(",\"ts_src\":\"no_rtc\"}\n");
+    // Serial.print(",\"ts_src\":\"no_rtc\"}\n");
     juid += ",\"ts_src\":\"no_rtc\"}\n";
   }
-  Serial.print(juid);
+  // Serial.print(juid);
   Serial.flush();
   return juid;
 }
 
 
 void setup() {
-  pinMode(LED_PIN, OUTPUT);
-  digitalWrite(LED_PIN, LOW);
-
   Serial.begin(115200);
+  delay(200);
 
   RFID_setup();
   WSS_setup();
+
+  pixel.begin();
+  ledColor(60, 0, 60, 40);                  // фиолетовый — инициализация
+
+  Wire.begin(I2C_SDA, I2C_SCL);             // I2C на заданных пинах
+  Wire.setClock(100000);                    // 100 кГц
+  if (rtc.begin()) {
+    rtc_ok = true;
+    if (rtc.lostPower()) {
+      rtc.adjust(DateTime(F(__DATE__), F(__TIME__))); // первичная инициализация
+      Serial.println("RTC: time set from compile time (lost power).");
+      ledFlash(60, 40, 0, 400, 200, 1);     // жёлтый — восстановлено после сброса
+    }
+  } else {
+    rtc_ok = false;
+    Serial.println("RTC: not found (I2C).");
+    ledColor(60, 0, 0, 40);                 // красный — RTC недоступен
+    delay(600);
+  }
+
+  SPI.begin(RC522_SCK, RC522_MISO, RC522_MOSI, RC522_SS); // SPI на заданных пинах
+  mfrc522.PCD_Init();                                      // Инициализация RC522
+  mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);          // Макс. усиление антенны
+
+  Serial.println("Ready. Tap a card...");
+  ledColor(0, 0, 60, 20);                   // синий — режим ожидания  
 }
