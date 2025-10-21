@@ -25,11 +25,13 @@
 
 #include "index.h"
 
-#define ssid "TEST"
-#define password NULL
+#define ssid "TEST"       // имя wifi
+#define password NULL     // пароль от wifi 
+#define Server_port 80    // порт, на котором открывается сервер
+#define WSS_port 81       // порт, на котором открывается web socket
 
-WebServer server(80);
-WebSocketsServer webSocket = WebSocketsServer(81);
+WebServer server(Server_port);
+WebSocketsServer webSocket = WebSocketsServer(WSS_port);
 
 /* ---------- ПИНЫ ---------- */
 // RC522 (SPI)

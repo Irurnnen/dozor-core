@@ -1,16 +1,3 @@
-// #include <WiFi.h>
-// #include <WebServer.h>
-// #include <WebSocketsServer.h>
-// #include "index.h"
-
-// // #define LED_PIN 2
-
-// #define ssid "TEST"
-// #define password NULL
-
-// WebServer server(80);
-// WebSocketsServer webSocket = WebSocketsServer(81);
-
 void handleRoot() { server.send(200, "text/html", htmlPage); }
 
 void handleWebSocketMessage(uint8_t num, uint8_t *payload, size_t length) {
