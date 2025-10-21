@@ -23,6 +23,8 @@ void loop() {
     webSocket.broadcastTXT(data);
   }
 
+  handleSerialCommands();
+
   webSocket.loop();
   server.handleClient();
   delay(1);

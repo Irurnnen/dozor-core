@@ -15,6 +15,33 @@ static inline void ledFlash(uint8_t r, uint8_t g, uint8_t b,
 }
 
 
+/* ----------- Парсер команд установки времени RTC ----------- */
+/* Формат команды:  T=YYYY-MM-DD HH:MM:SS  (закончить \n) */
+static void handleSerialCommands() {
+  while (Serial.available()) {
+    String line = Serial.readStringUntil('\n');
+    line.trim();
+    if (!line.startsWith("T=")) continue;
+
+    int yy, MM, dd, hh, mm, ss;
+    if (sscanf(line.c_str() + 2, "%d-%d-%d %d:%d:%d",
+               &yy, &MM, &dd, &hh, &mm, &ss) == 6) {
+      if (rtc_ok) {
+        rtc.adjust(DateTime(yy, MM, dd, hh, mm, ss));
+        Serial.println("{\"set_time\":\"ok\"}");
+        ledFlash(0, 60, 0, 100, 60, 2);     // зелёный — время принято
+      } else {
+        Serial.println("{\"set_time\":\"no_rtc\"}");
+        ledFlash(60, 0, 0, 120, 80, 2);     // красный — RTC недоступен
+      }
+    } else {
+      Serial.println("{\"set_time\":\"bad_format\",\"hint\":\"T=2025-10-02 12:34:56\"}");
+      ledFlash(60, 40, 0, 100, 60, 1);      // жёлтый — неверный формат
+    }
+  }
+}
+
+
 /* ----------- Печать JSON ----------- */
 static String printEventJson(/*const*/ String uid) {
   String juid = "{\"uid\":\"" + uid;
