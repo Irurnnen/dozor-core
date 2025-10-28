@@ -1,6 +1,7 @@
 void RFID_setup() {
-  SPI.begin();
-  mfrc522.PCD_Init();
+  SPI.begin(RC522_SCK, RC522_MISO, RC522_MOSI, RC522_SS); // SPI на заданных пинах
+  mfrc522.PCD_Init();                                      // Инициализация RC522
+  mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);          // Макс. усиление антенны
 }
 
 String getUID() {

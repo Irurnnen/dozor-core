@@ -91,10 +91,7 @@ void setup() {
         delay(600);
     }
 
-    SPI.begin(RC522_SCK, RC522_MISO, RC522_MOSI, RC522_SS);  // SPI на заданных пинах
-    mfrc522.PCD_Init();                                      // Инициализация RC522
-    mfrc522.PCD_SetAntennaGain(mfrc522.RxGain_max);          // Макс. усиление антенны
-
+    
     Serial.println("Ready. Tap a card...");
     ledColor(0, 0, 60, 20);  // синий — режим ожидания
 }
