@@ -22,29 +22,32 @@
 #include <RTClib.h>
 /* ---------- СВЕТОДИОДЫ ---------- */
 #include <Adafruit_NeoPixel.h>
+/* ---------- JSON ---------- */
+#include <ArduinoJson.h>
 
 #include "index.h"
 
-#define ssid "TEST"       // имя wifi
-#define password NULL     // пароль от wifi 
-#define Server_port 80    // порт, на котором открывается сервер
-#define WSS_port 81       // порт, на котором открывается web socket
+#define ssid "DOZOR"                 // имя wifi
+#define password "liQXsLNAJ8nd9V4l"  // пароль от wifi
+
+#define Server_port 80               // порт, на котором открывается сервер
+#define WSS_port 81                  // порт, на котором открывается web socket
 
 WebServer server(Server_port);
 WebSocketsServer webSocket = WebSocketsServer(WSS_port);
 
 /* ---------- ПИНЫ ---------- */
 // RC522 (SPI)
-#define RC522_SS    10    // SS (SDA на модуле RC522)
-#define RC522_RST   7     // RST
-#define RC522_SCK   12    // SCK
-#define RC522_MISO  13    // MISO
-#define RC522_MOSI  11    // MOSI
+#define RC522_SS 10    // SS (SDA на модуле RC522)
+#define RC522_RST 7    // RST
+#define RC522_SCK 12   // SCK
+#define RC522_MISO 13  // MISO
+#define RC522_MOSI 11  // MOSI
 // DS3231 (I2C)
-#define I2C_SDA   8   // SDA
-#define I2C_SCL   9   // SCL
+#define I2C_SDA 8  // SDA
+#define I2C_SCL 9  // SCL
 // Встроенный NeoPixel (часто GPIO48 на ESP32-S3 DevKit)
-#define LED_PIN   48
+#define LED_PIN 48
 #define LED_COUNT 1
 /* ------------------------------------------------------- */
 
