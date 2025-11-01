@@ -42,7 +42,7 @@ static void handleSerialCommands() {
 }
 
 
-/* ----------- Печать JSON ----------- */
+/* ----------- Сборка JSON ----------- */
 static String makeEventJson(String uid) {
     StaticJsonDocument<200> doc;
 
@@ -50,9 +50,10 @@ static String makeEventJson(String uid) {
 
     MFRC522::PICC_Type t = mfrc522.PICC_GetType(mfrc522.uid.sak);
     doc["type"] = mfrc522.PICC_GetTypeName(t);
+    // doc["size"] = mfrc522.uid.size;
 
     if (rtc_ok){ // если модуль времени работает
-        DataTime now = rtc.now();
+        DateTime now = rtc.now();
         doc["ts"] = now.unixtime();
         doc["ts_src"] = "rtc";
     } else { // если модуль времени не работает
@@ -61,7 +62,7 @@ static String makeEventJson(String uid) {
 
     String output;
     serializeJson(doc, output);
-    return output
+    return output;
 }
 
 
